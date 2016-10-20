@@ -129,17 +129,16 @@ public class MainApplication extends Application implements ReactApplication {
 ## Additional Notes
 
 - The properties phoneNumbers and emailAddresses will be returned as empty arrays if no phone numbers or emails are found.
-- The multi-select view was implemented using [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker). Please see its documentation to be more informed about it, if necessary.
 
-### Error Callback
+### Possible Promise Rejection Reasons
 
-The following will cause a callback that indicates an error (use the console.log to see the specific message):
+The following will cause a rejection that invokes the catch method of the promise that indicates an error (use the console.log to see the specific message):
 
 1) Android Version below 5.0 is used.
 
 2) User denies access to the addressbook
 
-3) The user takes longer than 45 seconds to pick a contact.
+3) The user takes longer than 45 seconds (or configured amount) to pick a contact.
 
 4) User hits the back button and never picks a contact.
 
