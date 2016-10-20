@@ -8,7 +8,7 @@ This is a react native module that wraps [Android-ContactPicker](https://github.
 npm install --save react-native-android-contactpicker
 ```
 
-## Usage Example: Single Contact
+## Usage Example
 
 ```js
 var ContactPicker = require('react-native-android-contactpicker')
@@ -24,7 +24,11 @@ ContactPicker.open({
   [
     {
       id: "100",
-      name: "John Doe",
+      name: {
+        display:"John Doe",
+        first: "John",
+        last: "Doe"
+      },
       phoneNumbers: [ {"number": "+1-555-555-5555"} ],
       emailAddresses: [ {"email": "john.doe@email.com"} ]
     }
@@ -35,8 +39,6 @@ ContactPicker.open({
   console.log(err)
 })
 ```
-
-## Usage Example: Single Contact
 
 ### Options
 

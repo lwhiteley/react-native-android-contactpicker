@@ -1,6 +1,7 @@
 package com.lwhiteley.reactnativecontactpicker;
 
 import android.app.Activity;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.content.Intent;
@@ -84,7 +85,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
                     contactIds.add(id);
                     WritableMap contactMap = Arguments.createMap();
                     contactMap.putString(RNContactConstants.ID_PROP_NAME, id);
-                    contactMap.putString(RNContactConstants.NAME_PROP_NAME, contact.getDisplayName());
+                    contactMap.putMap(RNContactConstants.NAME_PROP_NAME, getContactName(contact));
                     contactMap.putArray(RNContactConstants.PHONE_PROP_NAME, getPhones(mActivity, id));
                     contactMap.putArray(RNContactConstants.EMAIL_PROP_NAME, getEmails(mActivity, id));
                     contactMaps.pushMap(contactMap);
@@ -175,9 +176,11 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
 
     }
 
-    private WritableMap getErrorMeta() {
+    private WritableMap getContactName(Contact contact) {
         WritableMap meta = Arguments.createMap();
-        meta.putString("androidVersion", Build.VERSION.RELEASE);
+        meta.putString("display", contact.getDisplayName());
+        meta.putString("first", contact.getFirstName());
+        meta.putString("last", contact.getLastName());
         return meta;
     }
 
