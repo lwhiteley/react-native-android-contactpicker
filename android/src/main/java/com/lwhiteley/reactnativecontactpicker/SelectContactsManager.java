@@ -111,7 +111,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
 
         if (options != null && options.hasKey("timeout") && options.getInt("timeout") > 0) {
             timeout = options.getInt("timeout");
-            Log.i("RNContactPicker", "custom timeout set: " + timeout + " ms");
+            Log.i(RNContactConstants.COMPONENT_NAME, "custom timeout set: " + timeout + " ms");
         }
 
         // check if android version < 5.0

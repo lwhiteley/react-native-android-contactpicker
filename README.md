@@ -149,4 +149,4 @@ The following will cause a callback that indicates an error (use the console.log
 
 ## Acknowledgements and Special Notes
 
-- @rhaker started the initiative.
+- [@rhaker's](https://github.com/rhaker/) [react-native-select-contact-android](https://github.com/rhaker/react-native-select-contact-android) [Issue #5](https://github.com/rhaker/react-native-select-contact-android/issues/5) started the initiative.
