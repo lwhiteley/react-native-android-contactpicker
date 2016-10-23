@@ -121,8 +121,9 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
                 (android.os.Build.VERSION.RELEASE.startsWith("3.")) ||
                 (android.os.Build.VERSION.RELEASE.startsWith("4."))) {
 
-            promise.reject(generateCustomError("android version not supported: " + Build.VERSION.RELEASE));
-//            promise.reject
+            promise.reject(
+                    RNContactConstants.UNSUPPORTED,
+                    generateCustomError("android version not supported: " + Build.VERSION.RELEASE));
 
         } else {
 
@@ -158,7 +159,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
                         // cancel countdown, send result
                         counter.cancel();
                         // send user canceled
-                        promise.reject(generateCustomError("user canceled"));
+                        promise.reject(RNContactConstants.USER_CANCEL, generateCustomError("user canceled"));
                     }
 
                 }
@@ -171,7 +172,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
                             finalActivity.finishActivity(REQUEST_CONTACT);
                         }
                         // send timed out result
-                        promise.reject(generateCustomError("timed out"));
+                        promise.reject(RNContactConstants.TIMEOUT, generateCustomError("timed out"));
                     }
                 }
             }.start();
@@ -242,6 +243,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         constants.put("Themes", getThemeMap());
+        constants.put("Errors", getErroMap());
         return constants;
     }
 
@@ -249,6 +251,13 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
         WritableMap map = Arguments.createMap();
         map.putInt("DARK", R.style.ContactPicker_Theme_Dark);
         map.putInt("LIGHT", R.style.ContactPicker_Theme_Light);
+        return map;
+    }
+    private WritableMap getErroMap() {
+        WritableMap map = Arguments.createMap();
+        map.putString("TIMEOUT", RNContactConstants.TIMEOUT);
+        map.putString("UNSUPPORTED", RNContactConstants.UNSUPPORTED);
+        map.putString("USER_CANCEL", RNContactConstants.USER_CANCEL);
         return map;
     }
 
