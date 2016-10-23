@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class SelectContactsManager extends ReactContextBaseJavaModule implements ActivityEventListener {
+public class RNContactPickerManager extends ReactContextBaseJavaModule implements ActivityEventListener {
 
     // initialize variables
     private static final int REQUEST_CONTACT = 1766909987;
@@ -41,7 +41,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
     static CountDownTimer counter;
 
     // set the activity - pulled in from Main
-    public SelectContactsManager(ReactApplicationContext reactContext) {
+    public RNContactPickerManager(ReactApplicationContext reactContext) {
         super(reactContext);
         // Add the listener for `onActivityResult`
         reactContext.addActivityEventListener(this);

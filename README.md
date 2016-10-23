@@ -89,7 +89,7 @@ dependencies {
 
 * register module (in android/app/src/main/java/{your-app-namespace}/MainApplication.java)
 ```java
-import com.lwhiteley.reactnativecontactpicker.ReactNativeSelectContacts; // <------ add import
+import com.lwhiteley.reactnativecontactpicker.RNContactPicker; // <------ add import
 
 public class MainApplication extends Application implements ReactApplication {
   private final ReactNativeHost mReactNativeHost = new ReactNativeHost(this) {
@@ -100,7 +100,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-          new ReactNativeSelectContacts()
+          new RNContactPicker()
       );
     }
   };
