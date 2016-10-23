@@ -20,28 +20,29 @@ ContactPicker.open({
 })
 .then( (contacts) => {
   console.log(contacts)
-  if(err.code === ContactPicker.Errors.TIMEOUT){
-      alert('You took too long to select the contacts')
-    }
-  /**
-  Sample contact list:
-  [
-    {
-      id: "100",
-      name: {
-        display:"John Doe",
-        first: "John",
-        last: "Doe"
-      },
-      phoneNumbers: [ {"number": "+1-555-555-5555"} ],
-      emailAddresses: [ {"email": "john.doe@email.com"} ]
-    }
-  ]
-  **/
 })
 .catch( (err) => {
   console.log(err)
+  if(err.code === ContactPicker.Errors.TIMEOUT){
+      alert('You took too long to select the contacts')
+    }
 })
+
+/**
+Sample contact list:
+[
+  {
+    id: "100",
+    name: {
+      display:"John Doe",
+      first: "John",
+      last: "Doe"
+    },
+    phoneNumbers: [ {"number": "+1-555-555-5555"} ],
+    emailAddresses: [ {"email": "john.doe@email.com"} ]
+  }
+]
+**/
 ```
 
 ### Options
