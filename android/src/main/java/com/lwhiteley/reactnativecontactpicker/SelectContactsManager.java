@@ -101,6 +101,7 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
     @ReactMethod
     public void open(final ReadableMap options, final Promise promise) {
         mActivity = getCurrentActivity();
+        final Activity finalActivity = mActivity;
 
         // reset values in case multiple picks
         interval = 0;
@@ -166,6 +167,9 @@ public class SelectContactsManager extends ReactContextBaseJavaModule implements
                 public void onFinish() {
                     // poll for 45 cycles - or 45 seconds max
                     if (foundFlag == 0) {
+                        if (options != null && options.hasKey("closeOnTimeout") && options.getBoolean("closeOnTimeout")) {
+                            finalActivity.finishActivity(REQUEST_CONTACT);
+                        }
                         // send timed out result
                         promise.reject(generateCustomError("timed out"));
                     }

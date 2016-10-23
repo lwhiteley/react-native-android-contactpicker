@@ -45,6 +45,7 @@ ContactPicker.open({
 | Property  | Description  |
 |---|---|
 |  **timeout** (number)  |  Value in milliseconds (ms) that states how long to wait for the user to select a contact <br/> Default: `45000` |
+|  **closeOnTimeout** (boolean)  |  When true, will go close the ContactPicker and go back to the application <br/> Default: `false` |
 |  **theme** (int)  |  This option sets the theme for  [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker) multi-select view only <br/> Default: `ContactPicker.Themes.LIGHT` |  
 
 ### Constants
@@ -129,6 +130,7 @@ public class MainApplication extends Application implements ReactApplication {
 ## Additional Notes
 
 - The properties phoneNumbers and emailAddresses will be returned as empty arrays if no phone numbers or emails are found.
+- **closeOnTimeout** is an experimental feature, please report an issue if you are having problems.
 
 ### Possible Promise Rejection Reasons
 
