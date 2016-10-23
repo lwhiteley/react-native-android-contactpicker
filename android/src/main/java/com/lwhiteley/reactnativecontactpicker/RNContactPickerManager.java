@@ -255,9 +255,9 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
     }
     private WritableMap getErroMap() {
         WritableMap map = Arguments.createMap();
-        map.putString("TIMEOUT", RNContactConstants.TIMEOUT);
-        map.putString("UNSUPPORTED", RNContactConstants.UNSUPPORTED);
-        map.putString("USER_CANCEL", RNContactConstants.USER_CANCEL);
+        map.putString(RNContactConstants.TIMEOUT, RNContactConstants.TIMEOUT);
+        map.putString(RNContactConstants.UNSUPPORTED, RNContactConstants.UNSUPPORTED);
+        map.putString(RNContactConstants.USER_CANCEL, RNContactConstants.USER_CANCEL);
         return map;
     }
 
