@@ -50,7 +50,7 @@ Sample contact list:
 | Property  | Description  |
 |---|---|
 |  **timeout** (number)  |  Value in milliseconds (ms) that states how long to wait for the user to select a contact <br/> Default: `45000` |
-|  **closeOnTimeout** (boolean)  |  When true, will go close the ContactPicker and go back to the application <br/> Default: `false` |
+|  **closeOnTimeout** (boolean)  |  When true, will close the ContactPicker and go back to the application when a timeout exception occurs <br/> Default: `false` |
 |  **theme** (int)  |  This option sets the theme for  [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker) multi-select view only <br/> Default: `ContactPicker.Themes.LIGHT` |  
 
 ### Constants
