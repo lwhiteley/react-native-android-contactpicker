@@ -15,6 +15,7 @@ var ContactPicker = require('react-native-android-contactpicker')
 
 ContactPicker.open({
   timeout: 45000,
+  closeOnTimeout: true,
   theme: ContactPicker.Themes.LIGHT
 })
 .then( (contacts) => {
