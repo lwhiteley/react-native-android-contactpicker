@@ -14,8 +14,6 @@ npm install --save react-native-android-contactpicker
 var ContactPicker = require('react-native-android-contactpicker')
 
 ContactPicker.open({
-  timeout: 45000,
-  closeOnTimeout: true,
   theme: ContactPicker.Themes.LIGHT
 })
 .then( (contacts) => {
@@ -48,9 +46,7 @@ Sample contact list:
 ### Options
 
 | Property  | Description  |
-|---|---|
-|  **timeout** (number)  |  Value in milliseconds (ms) that states how long to wait for the user to select a contact <br/> Default: `45000` |
-|  **closeOnTimeout** (boolean)  |  When true, will close the ContactPicker and go back to the application when a timeout exception occurs <br/> Default: `false` |
+|---|:---|
 |  **theme** (int)  |  This option sets the theme for  [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker) multi-select view only <br/> Default: `ContactPicker.Themes.LIGHT` |  
 
 ### Constants
@@ -141,7 +137,6 @@ public class MainApplication extends Application implements ReactApplication {
 ## Additional Notes
 
 - The properties phoneNumbers and emailAddresses will be returned as empty arrays if no phone numbers or emails are found.
-- **closeOnTimeout** is an experimental feature, please report an issue if you are having problems.
 
 ### Possible Promise Rejection Reasons
 
@@ -150,8 +145,6 @@ The following will cause a rejection that invokes the catch method of the promis
 1) Android Version below 5.0 is used.
 
 2) User denies access to the addressbook
-
-3) The user takes longer than 45 seconds (or configured amount) to pick a contact.
 
 4) User hits the back button and never picks a contact.
 

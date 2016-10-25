@@ -6,7 +6,6 @@ import android.os.Build;
 import android.provider.ContactsContract;
 import android.content.Intent;
 import android.database.Cursor;
-import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
@@ -34,11 +33,7 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
 
     // initialize variables
     private static final int REQUEST_CONTACT = 1766909987;
-    private Activity mActivity = null;
-    static int foundFlag = 0;
-    static int interval = 0;
-    static WritableArray contactMaps;
-    static CountDownTimer counter;
+    private Promise mContactsPromise;
 
     // set the activity - pulled in from Main
     public RNContactPickerManager(ReactApplicationContext reactContext) {
@@ -51,26 +46,18 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
 
     }
 
-    public void onActivityResult(Activity activity, final int requestCode, final int resultCode, final Intent intent) {
-        this.handleMultipleContactsActivityResult(requestCode, resultCode, intent);
-    }
-
-    protected boolean handleMultipleContactsActivityResult(int requestCode, int resultCode, Intent data) {
-        if (mActivity == null) {
-            Log.i(RNContactConstants.COMPONENT_NAME, "Activity is null, may not be the current intent or there is a problem");
-            return false;
-        }
-        if (resultCode == mActivity.RESULT_CANCELED) {
+    public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_CONTACT && resultCode == activity.RESULT_CANCELED) {
             // set the flag to indicate user hit back button in address book (polling stops)
-            foundFlag = 2;
-            return false;
+            mContactsPromise.reject(RNContactConstants.USER_CANCEL, generateCustomError("user canceled"));
+            return;
         }
         if (requestCode == REQUEST_CONTACT && resultCode == Activity.RESULT_OK &&
                 data != null && data.hasExtra(ContactPickerActivity.RESULT_CONTACT_DATA)) {
 
             // process contacts
             List<String> contactIds = new ArrayList<>();
-            contactMaps = Arguments.createArray();
+            WritableArray contactMaps = Arguments.createArray();
             List<Contact> contacts = (List<Contact>) data.getSerializableExtra(ContactPickerActivity.RESULT_CONTACT_DATA);
             List<Group> groups = (List<Group>) data.getSerializableExtra(ContactPickerActivity.RESULT_GROUP_DATA);
             for (Group group : groups) {
@@ -86,34 +73,20 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
                     WritableMap contactMap = Arguments.createMap();
                     contactMap.putString(RNContactConstants.ID_PROP_NAME, id);
                     contactMap.putMap(RNContactConstants.NAME_PROP_NAME, getContactName(contact));
-                    contactMap.putArray(RNContactConstants.PHONE_PROP_NAME, getPhones(mActivity, id));
-                    contactMap.putArray(RNContactConstants.EMAIL_PROP_NAME, getEmails(mActivity, id));
+                    contactMap.putArray(RNContactConstants.PHONE_PROP_NAME, getPhones(activity, id));
+                    contactMap.putArray(RNContactConstants.EMAIL_PROP_NAME, getEmails(activity, id));
                     contactMaps.pushMap(contactMap);
                 }
             }
-            // set the flag to indicate selection made (polling stops)
-            foundFlag = 1;
+            mContactsPromise.resolve(contactMaps);
         }
-        return true;
     }
 
 
     @ReactMethod
     public void open(final ReadableMap options, final Promise promise) {
-        mActivity = getCurrentActivity();
-        final Activity finalActivity = mActivity;
-
-        // reset values in case multiple picks
-        interval = 0;
-        foundFlag = 0;
-        counter = null;
-        int timeout = 45000;
-
-
-        if (options != null && options.hasKey("timeout") && options.getInt("timeout") > 0) {
-            timeout = options.getInt("timeout");
-            Log.i(RNContactConstants.COMPONENT_NAME, "custom timeout set: " + timeout + " ms");
-        }
+        Activity mActivity = getCurrentActivity();
+        mContactsPromise = promise;
 
         // check if android version < 5.0
         if ((android.os.Build.VERSION.RELEASE.startsWith("1.")) ||
@@ -135,6 +108,7 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
                     theme = _theme;
                 }
             }
+
             Intent pickContactIntent = new Intent(mActivity, ContactPickerActivity.class)
                     .putExtra(ContactPickerActivity.EXTRA_THEME, theme)
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE, ContactPictureType.ROUND.name())
@@ -142,40 +116,6 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER, ContactSortOrder.AUTOMATIC.name());
             mActivity.startActivityForResult(pickContactIntent, REQUEST_CONTACT);
-
-            // poll for user input selection - max of 45 seconds
-            counter = new CountDownTimer(timeout, 1000) {
-                @Override
-                public void onTick(long millisUntilFinished) {
-                    // cancel polling if user picks
-                    if (foundFlag == 1) {
-                        // cancel countdown, send result
-                        counter.cancel();
-                        promise.resolve(contactMaps);
-                    }
-
-                    // cancel polling if user hits back button
-                    if (foundFlag == 2) {
-                        // cancel countdown, send result
-                        counter.cancel();
-                        // send user canceled
-                        promise.reject(RNContactConstants.USER_CANCEL, generateCustomError("user canceled"));
-                    }
-
-                }
-
-                @Override
-                public void onFinish() {
-                    // poll for 45 cycles - or 45 seconds max
-                    if (foundFlag == 0) {
-                        if (options != null && options.hasKey("closeOnTimeout") && options.getBoolean("closeOnTimeout")) {
-                            finalActivity.finishActivity(REQUEST_CONTACT);
-                        }
-                        // send timed out result
-                        promise.reject(RNContactConstants.TIMEOUT, generateCustomError("timed out"));
-                    }
-                }
-            }.start();
 
         }
 
@@ -255,9 +195,9 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
     }
     private WritableMap getErroMap() {
         WritableMap map = Arguments.createMap();
-        map.putString(RNContactConstants.TIMEOUT, RNContactConstants.TIMEOUT);
-        map.putString(RNContactConstants.UNSUPPORTED, RNContactConstants.UNSUPPORTED);
-        map.putString(RNContactConstants.USER_CANCEL, RNContactConstants.USER_CANCEL);
+        map.putString("TIMEOUT", RNContactConstants.TIMEOUT);
+        map.putString("UNSUPPORTED", RNContactConstants.UNSUPPORTED);
+        map.putString("USER_CANCEL", RNContactConstants.USER_CANCEL);
         return map;
     }
 
