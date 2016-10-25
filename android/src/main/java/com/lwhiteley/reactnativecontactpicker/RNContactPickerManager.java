@@ -48,7 +48,6 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
 
     public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_CONTACT && resultCode == activity.RESULT_CANCELED) {
-            // set the flag to indicate user hit back button in address book (polling stops)
             mContactsPromise.reject(RNContactConstants.USER_CANCEL, generateCustomError("user canceled"));
             return;
         }
@@ -100,7 +99,6 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
 
         } else {
 
-            // start the activity to pick the contact from addressbook
             int theme = R.style.ContactPicker_Theme_Light;
             if (options != null && options.hasKey("theme")) {
                 int _theme = options.getInt("theme");
@@ -109,6 +107,7 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
                 }
             }
 
+            // start the activity to pick the contact from addressbook
             Intent pickContactIntent = new Intent(mActivity, ContactPickerActivity.class)
                     .putExtra(ContactPickerActivity.EXTRA_THEME, theme)
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE, ContactPictureType.ROUND.name())
@@ -195,7 +194,6 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
     }
     private WritableMap getErroMap() {
         WritableMap map = Arguments.createMap();
-        map.putString("TIMEOUT", RNContactConstants.TIMEOUT);
         map.putString("UNSUPPORTED", RNContactConstants.UNSUPPORTED);
         map.putString("USER_CANCEL", RNContactConstants.USER_CANCEL);
         return map;

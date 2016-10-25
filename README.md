@@ -21,9 +21,6 @@ ContactPicker.open({
 })
 .catch( (err) => {
   console.log(err)
-  if(err.code === ContactPicker.Errors.TIMEOUT){
-      alert('You took too long to select the contacts')
-    }
 })
 
 /**
@@ -58,7 +55,6 @@ ContactPicker.Themes = {
 }
 
 ContactPicker.Errors = {
-  TIMEOUT,
   UNSUPPORTED,
   USER_CANCEL
 }
