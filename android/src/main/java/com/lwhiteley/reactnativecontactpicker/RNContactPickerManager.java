@@ -1,12 +1,10 @@
 package com.lwhiteley.reactnativecontactpicker;
 
 import android.app.Activity;
-import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.content.Intent;
 import android.database.Cursor;
-import android.util.Log;
 
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -182,7 +180,7 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
     public Map<String, Object> getConstants() {
         final Map<String, Object> constants = new HashMap<>();
         constants.put("Themes", getThemeMap());
-        constants.put("Errors", getErroMap());
+        constants.put("Errors", getErrorMap());
         return constants;
     }
 
@@ -192,7 +190,7 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
         map.putInt("LIGHT", R.style.ContactPicker_Theme_Light);
         return map;
     }
-    private WritableMap getErroMap() {
+    private WritableMap getErrorMap() {
         WritableMap map = Arguments.createMap();
         map.putString("UNSUPPORTED", RNContactConstants.UNSUPPORTED);
         map.putString("USER_CANCEL", RNContactConstants.USER_CANCEL);
