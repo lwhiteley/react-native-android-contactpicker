@@ -20,7 +20,7 @@ ContactPicker.open({
   console.log(contacts)
 })
 .catch( (err) => {
-  console.log(err)
+  console.log(err.code, err.message)
 })
 
 /**
