@@ -158,4 +158,4 @@ The following will cause a rejection that invokes the catch method of the promis
 ## Acknowledgements and Special Notes
 
 - [@rhaker's](https://github.com/rhaker/) [react-native-select-contact-android](https://github.com/rhaker/react-native-select-contact-android) [Issue #5](https://github.com/rhaker/react-native-select-contact-android/issues/5) started the initiative.
-- [@1gravity](https://github.com/1gravity/) for the awesome library and being open to adding new features.
+- [@1gravity](https://github.com/1gravity/) for the awesome library and being open to accepting new features in the [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker) library.
