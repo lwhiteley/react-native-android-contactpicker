@@ -34,7 +34,7 @@
     "napa": "^2.3.0"
   },
   "napa": {
-    "android-contactpicker": "git://github.com/lwhiteley/Android-ContactPicker#064eef8"
+    "android-contactpicker": "git://github.com/lwhiteley/Android-ContactPicker#4369566"
   },
   "devDependencies": {}
 }
