@@ -47,7 +47,7 @@ Sample contact list:
 |  **theme** (int)  |  This option sets the theme for  [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker) multi-select view only <br/> Default: `ContactPicker.Themes.LIGHT` |  
 |  **limit** (int)  |  This parameter will limit the amount of contacts that can be selected per intent. When set to zero, then no limiting will be enforced <br/> Default: `0` |
 |  **limitReachedMessage** (String)  |  This parameter sets the text displayed as a toast when the set limit is reached <br/> Default: `You can't pick more than {limit} contacts!` |
-|  **showCheckAll** (Boolean)  |  This parameter decides whether to show/hide the check_all button in the menu. When `EXTRA_SELECT_CONTACTS_LIMIT` > 0, this will be forced to `false`.  <br/> Default: `true` |
+|  **showCheckAll** (Boolean)  |  This parameter decides whether to show/hide the check_all button in the menu. When `limit` > 0, this will be forced to `false`.  <br/> Default: `true` |
 |  **onlyWithPhone** (Boolean)  |  This parameter sets the boolean that filters contacts that have no phone numbers <br/> Default: `false` |
 
 
