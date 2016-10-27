@@ -14,7 +14,9 @@ npm install --save react-native-android-contactpicker
 var ContactPicker = require('react-native-android-contactpicker')
 
 ContactPicker.open({
-  theme: ContactPicker.Themes.LIGHT
+  theme: ContactPicker.Themes.LIGHT,
+  limit: 20,
+  onlyWithPhone: true
 })
 .then( (contacts) => {
   console.log(contacts)
@@ -151,8 +153,9 @@ The following will cause a rejection that invokes the catch method of the promis
 
 ### Known issues
 
-- If you select too many contacts, there will be an exception that crashes the app. [details](https://www.neotechsoftware.com/blog/android-intent-size-limit). Possible solution would be to find a way to limit the selected contacts
+- If you select too many contacts, there will be an exception that crashes the app. [details](https://www.neotechsoftware.com/blog/android-intent-size-limit). The Best way to avoid this is to limit the amount of contacts a user can select per intent.
 
 ## Acknowledgements and Special Notes
 
 - [@rhaker's](https://github.com/rhaker/) [react-native-select-contact-android](https://github.com/rhaker/react-native-select-contact-android) [Issue #5](https://github.com/rhaker/react-native-select-contact-android/issues/5) started the initiative.
+- [@1gravity](https://github.com/1gravity/) for the awesome library and being open to adding new features.
