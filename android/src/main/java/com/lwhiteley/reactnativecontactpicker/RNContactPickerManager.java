@@ -84,6 +84,11 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
     public void open(final ReadableMap options, final Promise promise) {
         Activity mActivity = getCurrentActivity();
         mContactsPromise = promise;
+        int theme = R.style.ContactPicker_Theme_Light;
+        Boolean onlyWithPhone = false;
+        Boolean showCheckAll = true;
+        int limit = 0;
+        String limitReachedMessage = null;
 
         // check if android version < 5.0
         if ((android.os.Build.VERSION.RELEASE.startsWith("1.")) ||
@@ -97,20 +102,35 @@ public class RNContactPickerManager extends ReactContextBaseJavaModule implement
 
         } else {
 
-            int theme = R.style.ContactPicker_Theme_Light;
-            if (options != null && options.hasKey("theme")) {
-                int _theme = options.getInt("theme");
-                if (getValidThemes().contains(_theme)) {
-                    theme = _theme;
+            if (options != null) {
+                if(options.hasKey(RNContactConstants.OPTION_THEME)){
+                    int _theme = options.getInt(RNContactConstants.OPTION_THEME);
+                    theme = (getValidThemes().contains(_theme))? _theme : theme;
                 }
+
+                limit = (options.hasKey(RNContactConstants.OPTION_LIMIT))?
+                        options.getInt(RNContactConstants.OPTION_LIMIT) : 0;
+                onlyWithPhone = (options.hasKey(RNContactConstants.OPTION_ONLY_WITH_PHONE))?
+                        options.getBoolean(RNContactConstants.OPTION_ONLY_WITH_PHONE) : false;
+                showCheckAll = (options.hasKey(RNContactConstants.OPTION_SHOW_CHECK_ALL))?
+                        options.getBoolean(RNContactConstants.OPTION_SHOW_CHECK_ALL) : true;
+                limitReachedMessage = (options.hasKey(RNContactConstants.OPTION_LIMIT_REACHED_MESSAGE))?
+                        options.getString(RNContactConstants.OPTION_LIMIT_REACHED_MESSAGE) : null;
             }
 
             // start the activity to pick the contact from addressbook
             Intent pickContactIntent = new Intent(mActivity, ContactPickerActivity.class)
-                    .putExtra(ContactPickerActivity.EXTRA_THEME, theme)
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_BADGE_TYPE, ContactPictureType.ROUND.name())
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION, ContactDescription.ADDRESS.name())
-                    .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE, ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+                    .putExtra(ContactPickerActivity.EXTRA_CONTACT_DESCRIPTION_TYPE,
+                            ContactsContract.CommonDataKinds.Email.TYPE_WORK)
+
+                    .putExtra(ContactPickerActivity.EXTRA_THEME, theme)
+                    .putExtra(ContactPickerActivity.EXTRA_SHOW_CHECK_ALL, showCheckAll)
+                    .putExtra(ContactPickerActivity.EXTRA_SELECT_CONTACTS_LIMIT, limit )
+                    .putExtra(ContactPickerActivity.EXTRA_ONLY_CONTACTS_WITH_PHONE, onlyWithPhone )
+                    .putExtra(ContactPickerActivity.EXTRA_LIMIT_REACHED_MESSAGE, limitReachedMessage )
+
                     .putExtra(ContactPickerActivity.EXTRA_CONTACT_SORT_ORDER, ContactSortOrder.AUTOMATIC.name());
             mActivity.startActivityForResult(pickContactIntent, REQUEST_CONTACT);
 
