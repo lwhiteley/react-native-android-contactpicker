@@ -31,13 +31,7 @@
     "react-native": ">=0.29.0"
   },
   "dependencies": {
-    "napa": "^2.3.0"
-  },
-  "napa": {
     "android-contactpicker": "git://github.com/lwhiteley/Android-ContactPicker#temp"
-  },
-  "napa-config": {
-    "cache": false
   },
   "devDependencies": {}
 }
