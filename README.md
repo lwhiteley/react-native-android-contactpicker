@@ -77,8 +77,7 @@ ContactPicker.Errors = {
 //########################
 //Temporarily
 include ':android-contactpicker'
-project(':android-contactpicker').projectDir = new File(settingsDir,
-  '../node_modules/android-contactpicker/library')
+project(':android-contactpicker').projectDir = new File(settingsDir, '../node_modules/android-contactpicker/library')
 //########################
 
 include ':react-native-android-contactpicker'
