@@ -2,10 +2,7 @@
 
 This is a react native module that wraps [Android-ContactPicker](https://github.com/1gravity/Android-ContactPicker) to facilitate selecting multiple contacts in one intent. This is for android version 5 (or higher) only.
 
-> **NB.** Temporarily using `github` to install the android-contactpicker library until v1.2 is released.
-> There will be some temporary steps that will be removed in the official release.
-
-> make sure to clean before compiling:
+> After upgrading, make sure to clean before compiling:
 > `cd android && ./gradlew clean && cd ..`
 
 ## Installation
@@ -77,12 +74,6 @@ ContactPicker.Errors = {
 * In `android/settings.gradle`
 ```gradle
 ...
-//########################
-//Temporarily
-include ':android-contactpicker'
-project(':android-contactpicker').projectDir = new File(settingsDir, '../node_modules/android-contactpicker/library')
-//########################
-
 include ':react-native-android-contactpicker'
 project(':react-native-android-contactpicker').projectDir = new File(settingsDir, '../node_modules/react-native-android-contactpicker/android')
 

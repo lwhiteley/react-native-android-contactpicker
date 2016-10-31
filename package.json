@@ -1,7 +1,7 @@
 {
   "name": "react-native-android-contactpicker",
-  "version": "0.3.0",
-  "description": "A react-native wrapper for android-contactpicker",
+  "version": "0.4.0",
+  "description": "A react-native wrapper for android-contactpicker to facilitate multi-select in one intent",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +14,8 @@
     "contact",
     "addressbook",
     "email",
-    "multi-select"
+    "multi-select",
+    "picker"
   ],
   "repository": {
     "type": "git",
@@ -28,9 +29,6 @@
   "homepage": "https://github.com/lwhiteley/react-native-android-contactpicker",
   "peerDependencies": {
     "react-native": ">=0.29.0"
-  },
-  "dependencies": {
-    "android-contactpicker": "git://github.com/lwhiteley/Android-ContactPicker#temp"
   },
   "devDependencies": {}
 }

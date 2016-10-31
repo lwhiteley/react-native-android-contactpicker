@@ -31,6 +31,5 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    /*compile 'com.1gravity:android-contactpicker:1.2.0'*/
-    compile project(':android-contactpicker')
+    compile 'com.1gravity:android-contactpicker:1.2.0'
 }
